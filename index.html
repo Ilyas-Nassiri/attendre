@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISTA Ouarzazate - Culture et Techniques Avancées du Numérique</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(2deg); }
+            66% { transform: translateY(-15px) rotate(-2deg); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { 
+                box-shadow: 0 0 40px rgba(59, 130, 246, 0.6),
+                            0 0 80px rgba(139, 92, 246, 0.4);
+            }
+            50% { 
+                box-shadow: 0 0 60px rgba(59, 130, 246, 0.9),
+                            0 0 120px rgba(139, 92, 246, 0.6);
+            }
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(10px) translateY(-10px); }
+            50% { transform: translateX(0) translateY(-20px); }
+            75% { transform: translateX(-10px) translateY(-10px); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .animate-pulse-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0f172a, #1e3a8a, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
+            background-size: 400% 400%;
+            animation: gradient-shift 20s ease infinite;
+        }
+        
+        .slide-in {
+            animation: slide-in 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .rotating-border {
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6);
+            background-size: 300% 300%;
+            border-radius: inherit;
+            animation: gradient-shift 8s ease infinite, rotate-slow 10s linear infinite;
+            z-index: -1;
+            filter: blur(10px);
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background-size: 1000px 100%;
+            animation: shimmer 3s infinite;
+        }
+        
+        .music-wave {
+            animation: wave 1s ease-in-out infinite;
+        }
+        
+        @keyframes countdown-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .time-display {
+            animation: countdown-pulse 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen overflow-hidden">
+    <div id="particles" class="fixed inset-0 pointer-events-none"></div>
+    
+    <!-- Contrôle de la musique -->
+    <div class="fixed top-6 right-6 z-50">
+        <button id="musicToggle" class="bg-white/20 backdrop-blur-lg rounded-full p-4 border-2 border-white/40 hover:bg-white/30 transition-all duration-300 group">
+            <div class="flex items-center space-x-2">
+                <div id="musicIcon" class="text-2xl">🎵</div>
+                <div class="flex space-x-1">
+                    <div class="w-1 h-4 bg-white rounded music-wave" style="animation-delay: 0s;"></div>
+                    <div class="w-1 h-6 bg-white rounded music-wave" style="animation-delay: 0.2s;"></div>
+                    <div class="w-1 h-5 bg-white rounded music-wave" style="animation-delay: 0.4s;"></div>
+                    <div class="w-1 h-7 bg-white rounded music-wave" style="animation-delay: 0.6s;"></div>
+                </div>
+            </div>
+        </button>
+    </div>
+    
+    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center p-6">
+        <div class="relative bg-white/10 backdrop-blur-2xl rounded-3xl p-12 max-w-5xl w-full shadow-2xl border-2 border-white/30 slide-in overflow-hidden">
+            <div class="rotating-border"></div>
+            <div class="absolute inset-0 shimmer opacity-50"></div>
+            
+            <div class="relative text-center space-y-10">
+                <div class="animate-float">
+                    <h1 class="text-6xl md:text-8xl font-black text-white mb-4 drop-shadow-2xl tracking-tight">
+                        Culture et Techniques<br>
+                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                            Avancées du Numérique
+                        </span>
+                    </h1>
+                </div>
+                
+                <div class="relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-8 animate-pulse-glow overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent shimmer"></div>
+                    <h2 class="relative text-4xl md:text-5xl font-black text-white tracking-wider">
+                        GROUPE ID101
+                    </h2>
+                </div>
+                
+                <!-- Horaire de la séance -->
+                <div class="relative overflow-hidden bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl p-6 backdrop-blur-sm border-2 border-yellow-400/40 time-display">
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/10 to-transparent shimmer"></div>
+                    <div class="relative z-10 flex items-center justify-center space-x-4">
+                        <span class="text-5xl">⏰</span>
+                        <div>
+                            <p class="text-xl text-yellow-100 font-semibold mb-1">Horaire de la séance</p>
+                            <p class="text-4xl md:text-5xl text-white font-black">16:00 - 18:30</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative overflow-hidden bg-white/20 rounded-2xl p-10 backdrop-blur-md border border-white/30">
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 animate-pulse"></div>
+                    <p class="text-3xl md:text-4xl text-white font-bold relative z-10 mb-6">
+                        La séance commence dans quelques instants
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <div class="w-4 h-4 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full animate-bounce shadow-lg" style="animation-delay: 0s; animation-duration: 0.8s;"></div>
+                        <div class="w-4 h-4 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full animate-bounce shadow-lg" style="animation-delay: 0.2s; animation-duration: 0.8s;"></div>
+                        <div class="w-4 h-4 bg-gradient-to-r from-pink-400 to-pink-600 rounded-full animate-bounce shadow-lg" style="animation-delay: 0.4s; animation-duration: 0.8s;"></div>
+                    </div>
+                </div>
+                
+                <div class="pt-6 animate-float" style="animation-delay: 0.5s; animation-duration: 8s;">
+                    <div class="relative inline-block">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur-xl opacity-75 animate-pulse"></div>
+                        <div class="relative bg-white/25 backdrop-blur-md rounded-full px-10 py-6 border-3 border-white/50 shadow-2xl">
+                            <h3 class="text-3xl md:text-4xl font-black text-white flex items-center space-x-3">
+                                <span class="text-5xl">🎓</span>
+                                <span>ISTA OUARZAZATE</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-10 text-center text-white/90 slide-in" style="animation-delay: 0.3s;">
+            <p class="text-lg font-semibold">Préparé avec ❤️ pour les étudiants du numérique</p>
+        </div>
+    </div>
+
+    <!-- Audio élément pour la musique -->
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="Musique pour cours en ligne.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Système de particules amélioré
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 80;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 8 + 3;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                const duration = Math.random() * 8 + 8;
+                const delay = Math.random() * 5;
+                
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                particle.style.opacity = Math.random() * 0.5 + 0.3;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+        
+        // Effet de curseur lumineux amélioré
+        let lastTime = 0;
+        document.addEventListener('mousemove', (e) => {
+            const currentTime = Date.now();
+            if (currentTime - lastTime < 50) return;
+            lastTime = currentTime;
+            
+            const glow = document.createElement('div');
+            glow.className = 'particle';
+            const size = Math.random() * 15 + 10;
+            glow.style.width = size + 'px';
+            glow.style.height = size + 'px';
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+            glow.style.background = `radial-gradient(circle, rgba(${Math.random() * 100 + 155}, ${Math.random() * 100 + 155}, 255, 0.8), transparent)`;
+            glow.style.transition = 'all 0.8s ease-out';
+            
+            document.getElementById('particles').appendChild(glow);
+            
+            setTimeout(() => {
+                glow.style.opacity = '0';
+                glow.style.transform = 'scale(3)';
+            }, 10);
+            
+            setTimeout(() => {
+                glow.remove();
+            }, 800);
+        });
+        
+        // Contrôle de la musique
+        const audio = document.getElementById('backgroundMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+        let isPlaying = false;
+        
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                musicIcon.textContent = '🔇';
+                isPlaying = false;
+            } else {
+                audio.play().catch(e => console.log('Lecture automatique bloquée'));
+                musicIcon.textContent = '🎵';
+                isPlaying = true;
+            }
+        });
+        
+        // Démarrage automatique de la musique (peut être bloqué par le navigateur)
+        window.addEventListener('load', () => {
+            audio.play().then(() => {
+                isPlaying = true;
+                musicIcon.textContent = '🎵';
+            }).catch(e => {
+                console.log('Cliquez sur le bouton pour démarrer la musique');
+                musicIcon.textContent = '🔇';
+            });
+        });
+    </script>
+</body>
+</html>
